@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="./index.css" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0&icon_names=arrow_downward,arrow_upward,play_pause,restart_alt"
+        />
+    </head>
+
+    <body>
+        <main>
+            <div id="break-section">
+                <p id="break-label">Break Length</p>
+                <div id="break-controls" class="controls">
+                    <div id="break-decrement">
+                        <span class="material-symbols-outlined">
+                            arrow_downward
+                        </span>
+                    </div>
+                    <p id="break-length">5</p>
+                    <div id="break-increment">
+                        <span class="material-symbols-outlined">
+                            arrow_upward
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="session-section">
+                <p id="session-label">Session Length</p>
+                <div id="session-controls" class="controls">
+                    <div id="session-decrement">
+                        <span class="material-symbols-outlined">
+                            arrow_downward
+                        </span>
+                    </div>
+                    <p id="session-length">25</p>
+                    <div id="session-increment">
+                        <span class="material-symbols-outlined">
+                            arrow_upward
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="timer-section">
+                <div>
+                    <p id="timer-label">Session</p>
+                    <span id="time-left">25:00</span>
+                </div>
+                <div class="controls">
+                    <div id="start_stop">
+                        <span class="material-symbols-outlined">
+                            play_pause
+                        </span>
+                    </div>
+                    <div id="reset">
+                        <span class="material-symbols-outlined">
+                            restart_alt
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <audio
+            src="https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav"
+        ></audio>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="./index.js"></script>
+        <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    </body>
+</html>
