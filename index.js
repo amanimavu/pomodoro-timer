@@ -10,7 +10,7 @@ $("document").ready(() => {
     let sessionCounts = 0;
 
     const updateSession = ({ increment }) => {
-        sessionLength = Math.ceil(sessionLengthInSeconds / 60);
+        sessionLength = parseInt($("#session-length").text());
         sessionLength = increment ? sessionLength + 1 : sessionLength - 1;
 
         sessionLengthInSeconds = sessionLength * 60;
@@ -24,7 +24,7 @@ $("document").ready(() => {
     };
 
     const updateBreak = ({ increment }) => {
-        breakLength = Math.ceil(breakLengthInSeconds / 60);
+        breakLength = parseInt($("#break-length").text());
         breakLength = increment ? breakLength + 1 : breakLength - 1;
 
         breakLengthInSeconds = breakLength * 60;
