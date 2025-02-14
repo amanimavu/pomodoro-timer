@@ -81,18 +81,13 @@ span.material-symbols-outlined {
     transform: scale(1.5);
 }
 
-.controls p {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 #reset,
-#start-stop {
-    margin: 8px;
+#start_stop {
+    margin: 8px 25px;
 }
 
 main {
-    width: clamp(650px, 60%, 780px);
+    width: clamp(60%, 90vw, 780px);
     margin: auto;
     top: 50%;
     margin-top: 100px;
@@ -102,8 +97,16 @@ main {
     gap: 0 3%;
 }
 
-@media (width <= 1024px) {
+@media screen and (width <= 450px) {
     main {
-        grid-template-columns: 1fr 2fr 2fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #break-section {
+        grid-column: 1 / span 1;
+    }
+
+    #timer-section {
+        grid-column: 1 / span 2;
     }
 }
