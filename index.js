@@ -47,7 +47,7 @@ $("document").ready(() => {
         }
     });
 
-    $("#reset span").on("click", () => {
+    $("span#reset").on("click", () => {
         intervalId && clearInterval(intervalId);
         sessionLength = 25;
         breakLength = 5;
@@ -74,7 +74,7 @@ $("document").ready(() => {
         }
     });
 
-    $("#start_stop span").on("click", () => {
+    $("span#start_stop").on("click", () => {
         if (intervalId) {
             clearInterval(intervalId);
             intervalId = null;
