@@ -2,6 +2,10 @@
     --background-color: #808034;
     --primary-color: #ffffe3;
     --secondary-color: #ffffe3;
+
+    --lg: 1024px;
+    --md: 768px;
+    --xs: 425px;
 }
 
 * {
@@ -88,7 +92,7 @@ span.material-symbols-outlined {
 }
 
 main {
-    width: clamp(400px, 50%, 780px);
+    width: clamp(650px, 60%, 780px);
     margin: auto;
     top: 50%;
     margin-top: 100px;
@@ -96,4 +100,10 @@ main {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr 1fr;
     gap: 0 3%;
+}
+
+@media (width <= 1024px) {
+    main {
+        grid-template-columns: 1fr 2fr 2fr 1fr;
+    }
 }
