@@ -109,4 +109,9 @@ main {
     #timer-section {
         grid-column: 1 / span 2;
     }
+
+    #break-length,
+    #session-length {
+        user-select: none;
+    }
 }
