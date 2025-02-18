@@ -21,6 +21,9 @@ if (window.Worker) {
                 sessionLength -= 1;
             }
 
+            if (sessionLengthInSeconds === 0) {
+                $("#beep").trigger("play");
+            }
             $("#time-left").text(
                 `${sessionLength.toString().padStart(2, 0)}:${seconds
                     .toString()
@@ -32,7 +35,6 @@ if (window.Worker) {
                 $("#break-length").text()
             ) {
                 onBreak = true;
-                $("audio").trigger("play");
                 $("html").attr("style", "--secondary-color: #ffffe3");
                 $("#timer-label").text("Break");
                 $("#time-left").text(
@@ -43,6 +45,10 @@ if (window.Worker) {
                 if (breakLengthInSeconds >= 0) {
                     if (breakLengthInSeconds === 59) {
                         $("html").attr("style", "--secondary-color: #ff857a");
+                    }
+
+                    if (breakLengthInSeconds === 0) {
+                        $("#beep").trigger("play");
                     }
 
                     seconds = breakLengthInSeconds % 60;
@@ -64,7 +70,6 @@ if (window.Worker) {
                     sessionLengthInSeconds = sessionLength * 60;
                     breakLengthInSeconds = breakLength * 60;
                     onBreak = false;
-                    $("audio").trigger("play");
                     $("html").attr("style", "--secondary-color: #ffffe3");
                     $("#timer-label").text("Session");
                     $("#time-left").text(
@@ -85,47 +90,54 @@ if (window.Worker) {
 
     $("document").ready(() => {
         const updateSession = ({ increment }) => {
-            sessionLength = parseInt($("#session-length").text());
-            sessionLength = increment ? sessionLength + 1 : sessionLength - 1;
+            if (!intervalId) {
+                sessionLength = parseInt($("#session-length").text());
+                sessionLength = increment
+                    ? sessionLength + 1
+                    : sessionLength - 1;
 
-            sessionLengthInSeconds = sessionLength * 60;
-            $("#session-length").text(sessionLength);
-            if (!onBreak) {
-                $("html").attr("style", "--secondary-color: #ffffe3");
-                $("#time-left").text(
-                    `${sessionLength.toString().padStart(2, 0)}:00`
-                );
+                sessionLengthInSeconds = sessionLength * 60;
+                $("#session-length").text(sessionLength);
+                if (!onBreak) {
+                    $("html").attr("style", "--secondary-color: #ffffe3");
+                    $("#time-left").text(
+                        `${sessionLength.toString().padStart(2, 0)}:00`
+                    );
+                }
             }
         };
 
         const updateBreak = ({ increment }) => {
-            breakLength = parseInt($("#break-length").text());
-            breakLength = increment ? breakLength + 1 : breakLength - 1;
+            if (!intervalId) {
+                breakLength = parseInt($("#break-length").text());
+                breakLength = increment ? breakLength + 1 : breakLength - 1;
 
-            breakLengthInSeconds = breakLength * 60;
-            $("#break-length").text(breakLength);
-            if (onBreak) {
-                $("html").attr("style", "--secondary-color: #ffffe3");
-                $("#time-left").text(
-                    `${breakLength.toString().padStart(2, 0)}:00`
-                );
+                breakLengthInSeconds = breakLength * 60;
+                $("#break-length").text(breakLength);
+                if (onBreak) {
+                    $("html").attr("style", "--secondary-color: #ffffe3");
+                    $("#time-left").text(
+                        `${breakLength.toString().padStart(2, 0)}:00`
+                    );
+                }
             }
         };
 
-        $("#session-increment span").on("click", () => {
+        $("#session-increment").on("click", () => {
             if (sessionLength < 60) {
                 updateSession({ increment: true });
             }
         });
 
-        $("#session-decrement span").on("click", () => {
+        $("#session-decrement").on("click", () => {
             if (sessionLength > 1) {
                 updateSession({ increment: false });
             }
         });
 
         $("span#reset").on("click", () => {
-            intervalId && clearInterval(intervalId);
+            intervalId && myWorker.postMessage({ intervalId });
+            onBreak = false;
             sessionLength = 25;
             breakLength = 5;
             sessionLengthInSeconds = sessionLength * 60;
@@ -139,13 +151,13 @@ if (window.Worker) {
             $("html").attr("style", "--secondary-color: #ffffe3");
         });
 
-        $("#break-increment span").on("click", () => {
+        $("#break-increment").on("click", () => {
             if (breakLength < 60) {
                 updateBreak({ increment: true });
             }
         });
 
-        $("#break-decrement span").on("click", () => {
+        $("#break-decrement").on("click", () => {
             if (breakLength > 1) {
                 updateBreak({ increment: false });
             }
