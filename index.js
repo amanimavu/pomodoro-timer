@@ -11,7 +11,7 @@ if (window.Worker) {
     let intervalId;
 
     const updateTimer = () => {
-        if (sessionLengthInSeconds > 0) {
+        if (!onBreak && sessionLengthInSeconds > 0) {
             sessionLengthInSeconds -= 1;
             seconds = sessionLengthInSeconds % 60;
             if (sessionLengthInSeconds === 59) {
