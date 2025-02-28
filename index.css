@@ -2,6 +2,7 @@
     --background-color: #808034;
     --primary-color: #ffffe3;
     --secondary-color: #ffffe3;
+    --primary-color-2: #3d4127;
 
     --lg: 1024px;
     --md: 768px;
@@ -81,6 +82,14 @@ span.material-symbols-outlined {
     transform: scale(1.5);
 }
 
+.material-symbols-outlined:hover {
+    color: var(--primary-color-2);
+}
+
+.material-symbols-outlined:active {
+    transform: scale(1);
+}
+
 #reset,
 #start_stop {
     margin: 8px 25px;
@@ -110,8 +119,7 @@ main {
         grid-column: 1 / span 2;
     }
 
-    #break-length,
-    #session-length {
+    body {
         user-select: none;
     }
 }
