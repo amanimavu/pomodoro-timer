@@ -169,5 +169,11 @@ if (window.Worker) {
 
             myWorker.postMessage({ intervalId });
         });
+
+        $("html").on("keydown", (e) => {
+            if (e.which === 32) {
+                $("span#start_stop").trigger("click");
+            }
+        });
     });
 }
