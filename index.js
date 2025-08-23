@@ -89,6 +89,10 @@ if (window.Worker) {
     };
 
     $("document").ready(() => {
+        $(window).on("load", () => {
+            $("main").css("opacity", "1");
+        });
+        
         const updateSession = ({ increment }) => {
             if (!intervalId) {
                 sessionLength = parseInt($("#session-length").text());
