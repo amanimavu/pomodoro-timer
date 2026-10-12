@@ -1,12 +1,39 @@
 :root {
-    --background-color: #808034;
-    --primary-color: #ffffe3;
-    --secondary-color: #ffffe3;
-    --primary-color-2: #3d4127;
+    /* Warm sand surface: low chroma so the neumorphic shadows stay readable. */
+    --surface: #e8e3da;
+    --shadow-light: #f8f5ef;
+    --shadow-dark: #c7c0b3;
+    --track: #dbd5c9;
+
+    --text-strong: #2a2722; /* 11.6:1 on --surface */
+    --text-muted: #5d574d; /* 5.6:1 on --surface  */
+    --text-faint: #a49d90; /* frozen controls only   */
+    --accent: #b1563a; /* terracotta, large text & accents only (3.8:1) */
+    --accent-danger: #b02a20;
+    --on-accent: #fdfbf7; /* 4.7:1 on --accent */
+
+    --shadow-raised: -8px -8px 18px var(--shadow-light),
+        8px 8px 18px var(--shadow-dark);
+    --shadow-raised-lg: -16px -16px 34px var(--shadow-light),
+        16px 16px 34px var(--shadow-dark);
+    --shadow-sunken: inset -5px -5px 11px var(--shadow-light),
+        inset 5px 5px 11px var(--shadow-dark);
+
+    --radius-lg: 32px;
+    --radius-md: 20px;
+
+    --font-display: "Outfit", "Segoe UI", system-ui, sans-serif;
+    --font-ui: "DM Sans", "Segoe UI", system-ui, sans-serif;
+
+    --progress: 1;
 
     --lg: 1024px;
     --md: 768px;
     --xs: 425px;
+}
+
+html.ending {
+    --accent: var(--accent-danger);
 }
 
 * {
@@ -16,114 +43,359 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--background-color);
-    color: var(--primary-color);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    background-color: var(--surface);
+    color: var(--text-strong);
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-main{
-    transition: opacity 200ms ease-in;
+main {
+    width: clamp(300px, 88vw, 720px);
+    padding: clamp(1.5rem, 4vw, 3rem) 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    gap: clamp(1.5rem, 5vw, 3rem);
+    transition: opacity 320ms ease;
 }
 
-#break-section,
-#session-section,
+/* Soft, extruded panels --------------------------------------------- */
+
+.panel,
 #timer-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    /* border: solid; */
+    gap: 1.15rem;
+    width: 100%;
 }
 
-#timer-section > div:first-child {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: solid;
-    margin-bottom: 15px;
-    width: 80%;
-    border-radius: 25px;
-}
-
-p {
-    font-size: 24px;
-}
-
-span.material-symbols-outlined {
-    cursor: pointer;
-    user-select: none;
-}
-
-#time-left {
-    display: flex;
-    font-size: 60px;
-    margin-bottom: 20px;
-    color: var(--secondary-color);
-}
-
-#timer-label {
-    color: var(--secondary-color);
+.panel {
+    max-width: 290px;
+    padding: clamp(1.25rem, 3vw, 1.65rem) clamp(1.5rem, 4vw, 2rem);
+    background-color: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-raised);
 }
 
 #break-section {
+    grid-column: 1 / span 1;
+}
+
+#session-section {
     grid-column: 2 / span 1;
 }
 
 #timer-section {
-    grid-column: 2 / span 2;
+    grid-column: 1 / span 2;
 }
+
+/* Typography -------------------------------------------------------- */
+
+.setting-label,
+.timer-label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.timer-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+}
+
+.timer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0.35rem 0 0;
+    padding: 0.28rem 0.8rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sunken);
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.timer-status[hidden] {
+    display: none;
+}
+
+.stepper-value {
+    margin: 0;
+    min-width: 2.2ch;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 6vw, 2.3rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+#time-left {
+    display: flex;
+    font-family: var(--font-display);
+    font-size: clamp(3.1rem, 13vw, 4.4rem);
+    font-weight: 200;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    transition: color 200ms ease;
+}
+
+html.ending #time-left {
+    animation: ending-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes ending-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Timer dial -------------------------------------------------------- */
+
+.dial {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: clamp(232px, 54vw, 320px);
+    aspect-ratio: 1;
+    padding: 9px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        var(--accent) calc(var(--progress) * 360deg),
+        var(--track) 0deg
+    );
+    box-shadow: var(--shadow-raised-lg);
+}
+
+.dial-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--surface);
+    box-shadow: var(--shadow-sunken);
+}
+
+/* Controls ---------------------------------------------------------- */
 
 .controls {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 #break-length,
 #session-length {
-    margin: 0px 15px;
-}
-
-.material-symbols-outlined {
-    transform: scale(1.5);
-}
-
-.material-symbols-outlined:hover {
-    color: var(--primary-color-2);
-}
-
-.material-symbols-outlined:active {
-    transform: scale(1);
+    margin: 0 clamp(0.9rem, 3vw, 1.4rem);
 }
 
 #reset,
 #start_stop {
-    margin: 8px 25px;
+    margin: 0 12px;
 }
 
-main {
-    width: clamp(60%, 90vw, 780px);
-    margin: auto;
-    top: 50%;
-    margin-top: 100px;
+.neo-btn {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 1fr;
-    gap: 0 3%;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    font-size: 22px;
+    background-color: var(--surface);
+    color: var(--text-strong);
+    cursor: pointer;
+    user-select: none;
+    box-shadow: var(--shadow-raised);
+    transition: box-shadow 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-@media screen and (width <= 450px) {
-    main {
-        grid-template-columns: 1fr 1fr;
+.neo-btn:hover {
+    color: var(--accent);
+}
+
+.neo-btn:active {
+    transform: scale(0.95);
+    box-shadow: var(--shadow-sunken);
+}
+
+.neo-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.neo-btn--primary {
+    width: 60px;
+    height: 60px;
+    margin: 0 20px;
+    font-size: 28px;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    box-shadow: -7px -7px 16px rgba(255, 255, 255, 0.5),
+        8px 8px 20px rgba(122, 54, 34, 0.45);
+}
+
+.neo-btn--primary:hover {
+    color: var(--on-accent);
+    opacity: 0.92;
+}
+
+.neo-btn--primary:active {
+    box-shadow: inset -4px -4px 10px rgba(255, 255, 255, 0.25),
+        inset 5px 5px 12px rgba(110, 44, 27, 0.55);
+}
+
+/* Frozen controls: pressed into the surface and drained of colour, so a
+   stepper that cannot be used never looks clickable. */
+.neo-btn:disabled {
+    color: var(--text-faint);
+    cursor: not-allowed;
+    box-shadow: var(--shadow-sunken);
+}
+
+.neo-btn:disabled:hover,
+.neo-btn:disabled:active {
+    color: var(--text-faint);
+    transform: none;
+    box-shadow: var(--shadow-sunken);
+}
+
+.neo-btn:disabled:focus-visible {
+    outline-color: var(--text-faint);
+}
+
+.install-btn {
+    margin-top: 0.35rem;
+    padding: 0.4rem 0.95rem;
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--surface);
+    color: var(--text-muted);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: var(--shadow-raised);
+    transition: box-shadow 160ms ease, color 160ms ease;
+}
+
+.install-btn:hover {
+    color: var(--accent);
+}
+
+.install-btn:active {
+    box-shadow: var(--shadow-sunken);
+}
+
+.install-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.install-btn[hidden] {
+    display: none;
+}
+
+/* Tooltips: only the two action buttons have them, and they appear on
+   keyboard focus as well as hover. */
+.tooltip {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    padding: 0.3rem 0.6rem;
+    border-radius: 10px;
+    background-color: var(--text-strong);
+    color: var(--surface);
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.neo-btn:hover .tooltip,
+.neo-btn:focus-visible .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* While one of them has keyboard focus, do not also raise the other on
+   hover - two tooltips at once just looks like a mistake. */
+.controls:has(.neo-btn:focus-visible) .neo-btn:not(:focus-visible):hover .tooltip {
+    opacity: 0;
+}
+
+/* Responsive -------------------------------------------------------- */
+
+@media screen and (width <= 520px) {
+    body {
+        user-select: none;
     }
 
-    #break-section {
+    main {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+    }
+
+    #break-section,
+    #session-section,
+    #timer-section {
         grid-column: 1 / span 1;
     }
 
-    #timer-section {
-        grid-column: 1 / span 2;
+    .panel {
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    main,
+    .neo-btn,
+    #time-left {
+        transition: none;
     }
 
-    body {
-        user-select: none;
+    html.ending #time-left {
+        animation: none;
     }
 }

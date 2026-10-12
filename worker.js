@@ -1,14 +1,14 @@
+let intervalId;
+
 onmessage = (e) => {
-    let intervalId = e.data.intervalId;
-    if (intervalId) {
-        console.log("stop", `interval id: ${intervalId}`);
+    if (e.data.stop) {
         clearInterval(intervalId);
-        postMessage({ intervalId: null });
-    } else {
-        console.log("start", `interval id: ${intervalId}`);
+        intervalId = undefined;
+        postMessage({ running: false });
+    } else if (e.data.start && intervalId === undefined) {
         intervalId = setInterval(() => {
             postMessage("update timer");
         }, 1000);
-        postMessage({ intervalId });
+        postMessage({ running: true });
     }
 };
