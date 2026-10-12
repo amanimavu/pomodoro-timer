@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Promodo timer</title>
         <link
@@ -7,8 +7,40 @@
             type="image/x-icon"
             href="public/favicon/favicon.ico"
         />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="public/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="public/favicon/favicon-16x16.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="public/favicon/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="public/favicon/site.webmanifest" />
         <link href="./index.css" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#e8e3da" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Pomodoro" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="default"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Outfit:wght@200;300;400;500;600&display=swap"
+        />
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0&icon_names=arrow_downward,arrow_upward,play_pause,restart_alt"
@@ -17,59 +49,96 @@
 
     <body>
         <main style="opacity: 0;">
-            <div id="break-section">
-                <p id="break-label">Break Length</p>
+            <div id="break-section" class="panel">
+                <p id="break-label" class="setting-label">Break</p>
                 <div id="break-controls" class="controls">
-                    <span
+                    <button
                         id="break-decrement"
-                        class="material-symbols-outlined"
+                        class="material-symbols-outlined neo-btn"
+                        type="button"
+                        aria-label="Decrease break length"
                     >
                         arrow_downward
-                    </span>
-                    <p id="break-length">5</p>
+                    </button>
 
-                    <span
+                    <p id="break-length" class="stepper-value">5</p>
+
+                    <button
                         id="break-increment"
-                        class="material-symbols-outlined"
+                        class="material-symbols-outlined neo-btn"
+                        type="button"
+                        aria-label="Increase break length"
                     >
                         arrow_upward
-                    </span>
+                    </button>
                 </div>
             </div>
-            <div id="session-section">
-                <p id="session-label">Session Length</p>
+
+            <div id="session-section" class="panel">
+                <p id="session-label" class="setting-label">Session</p>
                 <div id="session-controls" class="controls">
-                    <span
+                    <button
                         id="session-decrement"
-                        class="material-symbols-outlined"
+                        class="material-symbols-outlined neo-btn"
+                        type="button"
+                        aria-label="Decrease session length"
                     >
                         arrow_downward
-                    </span>
+                    </button>
 
-                    <p id="session-length">25</p>
+                    <p id="session-length" class="stepper-value">25</p>
 
-                    <span
+                    <button
                         id="session-increment"
-                        class="material-symbols-outlined"
+                        class="material-symbols-outlined neo-btn"
+                        type="button"
+                        aria-label="Increase session length"
                     >
                         arrow_upward
-                    </span>
+                    </button>
                 </div>
             </div>
-            <div id="timer-section">
-                <div>
-                    <p id="timer-label">Session</p>
-                    <span id="time-left">25:00</span>
-                </div>
-                <div class="controls">
-                    <span id="start_stop" class="material-symbols-outlined">
-                        play_pause
-                    </span>
 
-                    <span id="reset" class="material-symbols-outlined">
-                        restart_alt
-                    </span>
+            <div id="timer-section">
+                <div class="dial">
+                    <div class="dial-inner">
+                        <p id="timer-label" class="timer-label">Session</p>
+                        <span id="time-left">25:00</span>
+                        <p id="timer-status" class="timer-status">Paused</p>
+                    </div>
                 </div>
+
+                <div class="controls">
+                    <button
+                        id="start_stop"
+                        class="material-symbols-outlined neo-btn neo-btn--primary"
+                        type="button"
+                        aria-label="Start or stop the timer"
+                        aria-describedby="start_stop-tip"
+                    >
+                        play_pause
+                        <span id="start_stop-tip" class="tooltip" role="tooltip">
+                            Start
+                        </span>
+                    </button>
+
+                    <button
+                        id="reset"
+                        class="material-symbols-outlined neo-btn"
+                        type="button"
+                        aria-label="Reset the timer"
+                        aria-describedby="reset-tip"
+                    >
+                        restart_alt
+                        <span id="reset-tip" class="tooltip" role="tooltip">
+                            Reset
+                        </span>
+                    </button>
+                </div>
+
+                <button id="install" class="install-btn" type="button" hidden>
+                    Install app
+                </button>
             </div>
         </main>
         <audio id="beep" src="public/audio/BeepSound.wav"></audio>
